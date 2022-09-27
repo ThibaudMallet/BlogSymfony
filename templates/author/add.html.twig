@@ -1,0 +1,17 @@
+{% extends "base.html.twig" %}
+{% block nav_author_add %}active{% endblock %}
+{% block content %}
+
+<form method="POST" action='{{path('author_addValid')}}'>
+	<div class="mb-3">
+		<label for="firstname" class="form-label">Prénom de l'auteur</label>
+		<input type="text" class="form-control" id="firstname" name="firstname" placeholder="Prénom">
+	</div>
+    <div class="mb-3">
+		<label for="lastname" class="form-label">Nom de l'auteur</label>
+		<textarea name="lastname" id="lastname" placeholder="Nom" class="form-control"></textarea>
+	</div>
+	<button type="submit" class="btn btn-primary">Créer</button>
+</form>
+
+{% endblock %}

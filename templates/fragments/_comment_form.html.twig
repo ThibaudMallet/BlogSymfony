@@ -1,0 +1,17 @@
+
+<hr>
+<div class="my-2">
+	<h3>Ajouter un commentaire</h3>
+	<form method="POST" action='{{path('comment_addValid')}}'>
+		<div class="mb-3 col-3">
+			<label for="username" class="form-label">Votre pseudo</label>
+			<input type="text" class="form-control" id="username" name="username" placeholder="Votre pseudo">
+		</div>
+		<div class="mb-3">
+			<label for="body" class="form-label">Votre commentaire</label>
+			<textarea name="body" id="body" placeholder="Votre commentaire ..." class="form-control"></textarea>
+		</div>
+		<input type="hidden" name="post" value="{{post.id}}">
+		<button type="submit" class="btn btn-primary">Créer</button>
+	</form>
+</div>

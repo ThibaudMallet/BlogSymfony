@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+	{% include "fragments/_flash_messages.html.twig" %}
+	<h2>{{post.title}}</h2>
+	<p>{{post.body}}</p>
+	<div class="my-2">
+		<span class="badge bg-success">{{post.nbLikes}}
+			Likes
+		</span>
+	</div>
+	<small>
+		<span class="fw-bold">
+			Date de publication :
+		</span>
+		{{post.publishedAt|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY")}}
+	</small>
+	<br>
+	<small>
+		<span class="fw-bold">
+			Auteur :
+		</span>
+		{{post.author}}
+	</small>
+	{% include "fragments/_comment_form.html.twig" %}
+	<div class="alert alert-light mt-3 ">
+		<h3>Commentaires</h3>
+		{% for comment in post.comments %}
+			<span class="text-muted">{{comment.username}}</span>
+			<p class="text-primary">
+				{{comment.body}}
+				<br>
+				<small class="text-warning">{{comment.createdAt|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY HH'h'mm")}}</small>
+			</p>
+		{% endfor %}
+	</div>
+
+{% endblock %}

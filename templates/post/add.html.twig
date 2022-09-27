@@ -1,0 +1,34 @@
+{% extends "base.html.twig" %}
+{% block nav_post_add %}active{% endblock %}
+{% block content %}
+
+<form method="POST" action='{{path('post_addValid')}}'>
+	<div class="mb-3">
+		<label for="title" class="form-label">Titre de l'article</label>
+		<input type="text" class="form-control" id="title" name="title" placeholder="Titre de l'article">
+	</div>
+    <div class="mb-3">
+		<label for="body" class="form-label">Le contenu de l'article</label>
+		<textarea name="body" id="body" placeholder="contenu de l'article" class="form-control"></textarea>
+	</div>
+    <div class="mb-3">
+		<label for="publishedAt" class="form-label">Date de publication</label>
+		<input type="date" class="form-control" id="publishedAt" name="publishedAt">
+	</div>
+	 <div class="mb-3">
+		<label for="image" class="form-label">Url de l'image</label>
+		<input type="url" class="form-control" id="image" name="image" placeholder="Url de l'image">
+	</div>
+	 <div class="mb-3 col-4">
+		<label for="author" class="form-label">Auteur</label>
+		<select name="author" id="author" class="form-select">
+			{% for author in authors %}
+				<option value="{{author.id}}">{{author}}</option>	
+			{% endfor %}
+		</select>
+	</div>
+
+	<button type="submit" class="btn btn-primary">Créer</button>
+</form>
+
+{% endblock %}
