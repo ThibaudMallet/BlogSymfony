@@ -6,9 +6,11 @@ Le but est de réaliser un blog, en utilisant Symfony
 
 27/09 :
 
-Initialisation du blog
+- Initialisation du blog
 
 MAJ 07/10 :
 
-Remise à niveau du .env.local
-Création de fixtures
+- Remise à niveau du .env.local
+- Création de fixtures
+- Ajout du ROLE_ADMIN pour avoir accès à la page article/ajouter
+- Ainsi que du user admin mdp admin
