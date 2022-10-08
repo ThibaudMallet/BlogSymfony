@@ -14,3 +14,7 @@ MAJ 07/10 :
 - Création de fixtures
 - Ajout du ROLE_ADMIN pour avoir accès à la page article/ajouter
 - Ainsi que du user admin mdp admin
+
+MAJ 08/10 :
+
+Gestion des fixtures grâce à Faker

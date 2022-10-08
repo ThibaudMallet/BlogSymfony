@@ -2,6 +2,9 @@
 
 namespace App\DataFixtures;
 
+use App\DataFixtures\Provider\AppProvider;
+use Faker\ORM\Doctrine\Populator;
+use Faker;
 use App\Entity\Author;
 use App\Entity\Post;
 use DateTimeImmutable;
@@ -13,32 +16,39 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $authorList = [];
 
-        $michel = new Author();
-        $michel->setFirstname('Michel');
-        $michel->setLastname('Potin');
-        $michel->setCreatedAt(new DateTimeImmutable());
-        $authorList[] = $michel;
-        $manager->persist($michel);
+        // ! config du faker et du populator
+        $faker = Faker\Factory::create('fr_FR');
 
-        $jacques = new Author();
-        $jacques->setFirstname('Jacques');
-        $jacques->setLastname('Retour');
-        $jacques->setCreatedAt(new DateTimeImmutable());
-        $authorList[] = $jacques;
-        $manager->persist($jacques);
+        $populator = new Populator($faker,$manager);
 
         
-        for ($i = 0; $i < 20; $i++) {
-            $rand = array_rand($authorList);
-            $post = new Post();
-            $post->setTitle('Lorem Ipsum '. $i);
-            $post->setBody('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ultricies placerat leo sit amet feugiat. Praesent sed efficitur enim, sit amet luctus massa. Curabitur pellentesque turpis turpis, ut ultricies risus luctus vel. Nam in enim at magna tempor scelerisque sit amet ac mauris. Suspendisse tempor, felis id ultricies sollicitudin, enim nunc imperdiet risus, vel mattis leo dui eget ante. Aenean. ');
-            $post->setPublishedAt(new DateTimeImmutable());
-            $post->setAuthor($authorList[$rand]);
-            $post->setImage('<img src="https://fakeimg.pl/250x100/">');
-            $manager->persist($post);
+        $populator->addEntity(Author::class,5,[
+            'firstname' => function() use ($faker) { return $faker->word(1); },
+            'lastname' => function() use ($faker) { return $faker->word(1); },
+            'createdAt' => function() use ($faker) { return \DateTimeImmutable::createFromMutable($faker->dateTime()); },
+        ]);
+        
+        $populator->addEntity(Post::class,20,[
+            'title' => function() use ($faker) { return $faker->word(3); },
+            'body' => function() use ($faker) { return $faker->text(); },
+            'publishedAt' => function() use ($faker) { return \DateTimeImmutable::createFromMutable($faker->dateTime()); },
+            'image' => function()  { return "https://picsum.photos/200/300"; },
+        ]);
+        // Ici j'ai un tableau avec tous mes objets ajouté en bdd
+        $insertedItems = $populator->execute();
+
+        $authorsList = [];
+
+        foreach($insertedItems['App\Entity\Author'] as $author) {
+            $author->__construct();
+            $authorsList[] = $author;
+        }
+
+        foreach($insertedItems['App\Entity\Post'] as $post) {
+            $post->__construct();
+            $rand = array_rand($authorsList);
+            $post->setAuthor($authorsList[$rand]);
         }
 
         $manager->flush();
