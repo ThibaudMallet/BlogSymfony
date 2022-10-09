@@ -7,6 +7,7 @@ use Faker\ORM\Doctrine\Populator;
 use Faker;
 use App\Entity\Author;
 use App\Entity\Post;
+use App\Entity\User;
 use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -50,6 +51,18 @@ class AppFixtures extends Fixture
             $rand = array_rand($authorsList);
             $post->setAuthor($authorsList[$rand]);
         }
+
+        $admin = new User();
+        $admin->setEmail('admin@admin.com');
+        $admin->setRoles(['ROLE_ADMIN']);
+        $admin->setPassword('$2y$13$pqGG/JGCx3FfThX44eypu.pnShyRZRxePiBTKhI9J56ZDTDn6S8LO');
+        $user = new User();
+        $user->setEmail('user@user.com');
+        $user->setRoles(['ROLE_USER']);
+        $user->setPassword('$2y$13$M6skzIO627KGeGbzTbQYfu6QLIg4XXFv0wFV5DyvKgdfiDa/mzYLe');
+
+       $manager->persist($admin); 
+       $manager->persist($user); 
 
         $manager->flush();
     }

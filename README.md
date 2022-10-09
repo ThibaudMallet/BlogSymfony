@@ -18,3 +18,11 @@ MAJ 07/10 :
 MAJ 08/10 :
 
 Gestion des fixtures grâce à Faker
+
+MAJ 09/10 :
+
+- Ajout de l'entity user
+- Suppression du system user memory pour la connection
+- Creation des fixtures pour 2 user / role différent
+  - admin@admin.com - admin
+  - user@user.com - user
